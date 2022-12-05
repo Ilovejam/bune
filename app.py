@@ -7,3 +7,5 @@ app = Flask(__name__)
 def index():
     return 'Jamal was here'
     
+if __name__ == '__main__':
+    app.run()
