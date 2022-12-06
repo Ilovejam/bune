@@ -6,7 +6,12 @@ from time import time,sleep
 
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+def open_file(filepath):
+    with open(filepath, 'r', encoding='utf-8') as infile:
+        return infile.read()
+
+openai.api_key = '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'
 
 def bot(prompt, engine='text-davinci-003', temp=0.7, top_p=1, tokens=256, freq_pen=0, pres_pen=0, stop=['<<END>>']):
     max_retry = 1
