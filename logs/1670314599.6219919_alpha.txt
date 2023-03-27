@@ -1,9 +1,0 @@
-PROMPT:
-
-Why sky is blue?
-
-==========
-
-RESPONSE:
-
-Sky is blue because of the way sunlight scatters off of the molecules in the Earth's atmosphere. The blue wavelengths of light are scattered more widely and more completely than other colors because of their shorter wavelength. This is why we see a blue sky most of the time.

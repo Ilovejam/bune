@@ -1,119 +1,272 @@
 <!DOCTYPE html>
 <html>
-  <title>ChatBot - Beta</title>
+  <title>ChatBot</title>
   <head>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
     <style>
+      * {
+        box-sizing: border-box;
+      }
       body {
-        font-family: monospace;
-      }
-      h1 {
-        background-color: #ce13c8;
-        color: black;
-        display: inline-block;
-        font-size: 2em;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(251.67deg, #0e1d35 1.36%, #000000 61.68%);
         margin: 0;
-        padding: 10px;
+        color: white;
+        display: flex;
+        flex-direction: row;
       }
-      #chatbox {
-        margin-left: auto;
-        margin-right: auto;
-        width: 55%;
-        margin-top: 60px;
+
+      #left-panel {
+        width: calc(100% / 3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
-      #userInput {
-        margin-left: auto;
-        margin-right: auto;
-        width: 40%;
-        margin-top: 60px;
-      
+
+      #alpha-header {
+        font-size: 2em;
       }
-      #textInput {
-        width: 90%;
-        border: none;
-        border-bottom: 3px solid black;
-        font-family: monospace;
-        font-size: 17px;
-        margin-bottom: 10px;
+      #chatbot-panel {
+        width: calc((100% / 3) * 2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 10%;
       }
-      .userText {
-        color: black;
-        font-family: monospace;
-        font-size: 17px;
-        text-align: right;
-        line-height: 30px;
+
+      .chat-container {
+        width: 100%;
+        margin: 50px auto;
         border-radius: 5px;
-        margin-top: 25px;
-        margin-right: auto;
-        width: 10%%;
-        
+        margin-top: 100px;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
       }
-      .userText span {
-        background-color: #8cfff3;
+      .chat-header {
+        padding: 15px;
+        background-color: #039f6a;
+        color: #fff;
+        border-radius: 5px 5px 0 0;
+        display: flex;
+        align-items: center;
+      }
+      .chat-header img {
+        margin-right: 10px;
+      }
+      .chat-header h2 {
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: normal;
+      }
+      .chat-messages {
+        padding: 15px;
+        overflow-y: auto;
+        height: 300px;
+      }
+      .message {
+        margin: 10px 0;
+      }
+      .user-message {
+        display: flex;
+        justify-content: flex-start;
+      }
+      .user-message .message-text {
+        background-color: #000000;
+        color: #ffffff;
         padding: 10px;
-        border-radius: 7px;
-        box-shadow: 8px 7px 6px 5px #888888;
-      }
-      .botText {
-        color: black;
-        font-family: monospace;
-        font-size: 17px;
+        width: 90%;
         text-align: left;
-        line-height: 30px;
-        background-color: #ffffff ;
-        border-radius: 7px;
-        box-shadow: 8px 7px 6px 5px #888888;
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+        height: 70px;
       }
-      .botText span {
+
+      .bot-message {
+        display: flex;
+        align-items: flex-start;
+      }
+      .bot-message .message-text {
+        background: linear-gradient(
+          90deg,
+          #0e1d34 57.5%,
+          rgba(14, 29, 53, 0) 100%
+        );
+        color: #ffffff;
         padding: 10px;
-        border-radius: 2px;
+        width: 90%;
+        text-align: left;
+        height: 70px;
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
       }
-      #tidbit {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 300px;
+      .message img {
+        width: 25px;
+        margin-right: 10px;
+        border-radius: 50%;
       }
-      
+      .chat-input {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        margin-top: 10px;
+        background-color: #0D1B31; /* Add the background color for the whole chat-input area */
+        border-radius: 5px; /* Add border-radius to match the chat-input area */
+      }
+      .chat-input input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        font-size: 1em;
+        border: none;
+        background: transparent; /* Remove the background color to make the input transparent */
+        box-shadow: none; /* Remove the box-shadow */
+        color: #ffffff; /* Add a text color to make the input text visible */
+        outline: none;
+      }
+      .chat-input input[type="submit"] {
+        padding: 10px;
+        font-size: 1em;
+        border: none;
+        border-radius: 5px;
+        background-color: #9d9d9d;
+        color: #000000;
+        cursor: pointer;
+        box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+      }
+      .chat-input input[type="submit"]:hover {
+        background-color: #c800b3;
+      }
+      #logo {
+        max-width: 25%;
+        height: auto;
+        position: relative;
+        top: 0;
+        left: 0;
+        margin: 15px;
+      }
+      .message-text {
+        word-wrap: break-word;
+        max-height: calc(
+          1.2em * 2 * 14
+        ); /* Two lines with a line-height of 1.2em */
+        overflow: hidden;
+        line-height: 1.2em;
+      }
+
+      #submit-button {
+        padding: 10px;
+        font-size: 1em;
+        border: none;
+        background: transparent; /* Remove the background color */
+        cursor: pointer;
+        box-shadow: none; /* Remove the box-shadow */
+      }
+
+      #submit-button:hover {
+        background-color: transparent; /* Keep the background color transparent on hover */
+      }
+
+      #submit-button i {
+        color: #ffffff; /* Change the icon color to white */
+      }
+      .user-message .message-box {
+        background-color: #D9D9D9;
+        width: 32px;
+        height: 32px;
+        border-radius: 5;
+        margin-right: 5px;
+      }
+
+      .bot-message .message-box {
+        background-color: #ff0000;
+        width: 32px;
+        height: 32px;
+        border-radius: 5;
+        margin-right: 5px;
+      }
+
+      .user-message .message-box {
+        background-color: #D9D9D9;
+        border-radius: 5;
+      }
+
+      .bot-message .message-box {
+        background-color: #ce13c8;
+      }
     </style>
+
   </head>
+
   <body>
-    
-    <div class="boxed">
-      <div>
-        <div id="chatbox">
-          <span><p class="botText">
-            <span>Hey!</span>
-          </p></span>
-        </div>
-        <div id="userInput">
-          <input id="textInput" type="text" name="msg" placeholder="Enter message here..." />
-        </div>
+    <div id="left-panel">
+      <h2 id="alpha-header">Alpha AI </h2> </br>
+      <h3>Beta version</h3>
+
+    </div>
+    <div id="chatbot-panel">
+      <div class="chat-container">
+        <div class="chat-messages" id="chat-messages"></div>
       </div>
-      <script>
-        function getBotResponse() {
-          var rawText = $("#textInput").val();
-          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
-          $("#textInput").val("");
-          $("#chatbox").append(userHtml);
-          document
-            .getElementById("userInput")
-            .scrollIntoView({ block: "start", behavior: "smooth" });
-          $.get("/get", { msg: rawText }).done(function(data) {
-            var botHtml = '<p class="botText"><span>' + data + "</span></p>";
-            
-            $("#chatbox").append(botHtml);
-            document
-              .getElementById("userInput")
-              .scrollIntoView({ block: "start", behavior: "smooth" });
+      <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button id="submit-button" type="submit" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+      </div>
+      
+    </div>
+    <script>
+      function sendMessage() {
+        var userInput = document.getElementById("user-input");
+        var userMessage = userInput.value;
+        if (userMessage !== "") {
+          var chatMessages = document.getElementById("chat-messages");
+          var userDiv = document.createElement("div");
+          userDiv.classList.add("message", "user-message");
+          var messageBox = document.createElement("div");
+          messageBox.classList.add("message-box");
+          userDiv.appendChild(messageBox);
+          var messageText = document.createElement("p");
+          messageText.classList.add("message-text");
+          messageText.innerText = userMessage;
+          userDiv.appendChild(messageText);
+          chatMessages.appendChild(userDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          userInput.value = "";
+          $.get("/get", { msg: userMessage }).done(function (data) {
+            var botDiv = document.createElement("div");
+            botDiv.classList.add("message", "bot-message");
+            var messageBox = document.createElement("div");
+            messageBox.classList.add("message-box");
+            botDiv.appendChild(messageBox);
+            var messageText = document.createElement("p");
+            messageText.classList.add("message-text");
+            botDiv.appendChild(messageText);
+            chatMessages.appendChild(botDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            var i = 0;
+            var typingEffect = setInterval(function () {
+              if (i < data.length) {
+                var currentChar = data.charAt(i);
+                if (currentChar === " ") {
+                  messageText.innerText += "\u00A0";
+                } else {
+                  messageText.innerText += currentChar;
+                }
+                i++;
+              } else {
+                clearInterval(typingEffect);
+              }
+            }, 30);
           });
         }
-        $("#textInput").keypress(function(e) {
-          if (e.which == 13) {
-            getBotResponse();
-          }
-        });
-      </script>
-    </div>
-  </body>
+      }
+  
+      var userInput = document.getElementById("user-input");
+      userInput.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          sendMessage();
+        }
+      });
+    </script>
+  </body>  
 </html>
